@@ -31,11 +31,20 @@ seq2 = pattern('random');
 elec_i = electricsource(seq1, 'ook', symbrate, 'cosroll', duty, roll);
 elec_q = electricsource(seq2, 'ook', symbrate, 'cosroll', duty, roll);
 
-Eoutiq = afoc_iqmod(laser_signal, elec_i, elec_q, 1, 0);
+[Eoutiq, Eopti, Eoutq] = afoc_iqmod(laser_signal, elec_i, elec_q, 1, 0);
 points=linspace(1,4096,4096);
 figure;
 plot(points, elec_i, points, elec_q);
 legend('Electrical Signal (I-Branch)', 'Electrical Signal (Q-Branch)');
 figure;
 plot(points, Eoutiq);
+%plot(Eopti,Eoptq,'.b');
 legend('IQ Modulator output')
+
+
+
+%One last step, in order to compare with Optilux results.
+Eoptilux = qi_modulator(laser_signal, elec_i, elec_q);
+figure;
+plot(points, Eoptilux, points, Eoutiq);
+legend('Optilux','Afoc IQ')
