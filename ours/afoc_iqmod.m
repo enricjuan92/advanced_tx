@@ -18,4 +18,4 @@ legend('MZM Output (I-Branch)', 'MZM Output (Q-Branch)');
 %legend('Optical Power (I-Branch)','Optical Power (Q-Branch)');
 
 
-Eout_iq = 2*(Eout_i + Eout_q*exp(1i*(pi/2)));
+Eout_iq = 2*(Eout_i + 1i*Eout_q);
