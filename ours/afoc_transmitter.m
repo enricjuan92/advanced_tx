@@ -31,8 +31,11 @@ seq1 = pattern('random');
 seq2 = pattern('random');
 
 %OOK
-elec_i = electricsource(seq1, 'qpsk', symbrate, 'cosroll', duty, roll);
-elec_q = electricsource(seq2, 'qpsk', symbrate, 'cosroll', duty, roll);
+%elec_i = electricsource(seq1, 'qpsk', symbrate, 'cosroll', duty, roll);
+%elec_q = electricsource(seq2, 'qpsk', symbrate, 'cosroll', duty, roll);
+modsignal = modulationChooser(seq1, 'QPSK');
+elec_i = real(modsignal);
+elec_q = imag(modsignal);
 
 %OOK
 [Eoutiq, Eopti, Eoptq] = afoc_iqmod(laser_signal, elec_i, elec_q, 1, 0);
