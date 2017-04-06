@@ -43,6 +43,9 @@ legend('Electrical Signal (I-Branch)', 'Electrical Signal (Q-Branch)');
 figure;
 plot(points, Eoutiq);
 legend('IQ Modulator output')
+elec_complex = elec_i + 1i*elec_q;
+figure;
+plot(real(elec_complex), imag(elec_complex));
 
 %One last step, in order to compare with Optilux results.
 Eoptilux = qi_modulator(laser_signal, elec_i, elec_q);
