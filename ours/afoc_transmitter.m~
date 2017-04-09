@@ -60,34 +60,26 @@ figure;
 plot(points, Eoutiq);
 legend('IQ Modulator output')
 
-%preprocessing for plotting: most repeated values
-index_i = rep_values(elec_i, 25);
-index_q = rep_values(elec_q, 25);
+%preprocessing for plotting
+% uniq_i = unique(elec_i);
+% uniq_q = unique(elec_q);
+% n_i = histc(elec_i, uniq_i);
+% n_q = histc(elec_q, uniq_q);
+% elec_i_viv = find(elec_i == uniq_i(n_i > 20));
+% elec_q_viv = find(elec_q == uniq_q(n_q > 20));
 
 figure;
-plot(elec_i, elec_q, '*r');
-hold on;
-plot(elec_i(index_i), elec_q(index_q), '*b', 'LineWidth', 1);
+%plot(elec_i, elec_q, '*r');
+plot(elec_i(hist(elec_q, unique(elec_q))), elec_q, '*r');
 title('Electrical constellation');
-hold off;
 
 %One last step, in order to compare with Optilux results.
 Eoptilux = qi_modulator(laser_signal, elec_i, elec_q);
 figure;
 plot(points, Eoptilux, points, Eoutiq);
 legend('Optilux','Afoc IQ')
-
-%preprocessing for plotting: most repeated values
-Eoptilux_i = real(Eoptilux);
-Eoptilux_q = imag(Eoptilux);
-
-index_i = rep_values(Eoptilux_i, 20);
-index_q = rep_values(Eoptilux_q, 20);
-
 figure;
-plot(Eoptilux_i, Eoptilux_q, '*g');
-hold on;
-plot(Eoptilux_i(index_i), Eoptilux_q(index_q), '*r', 'LineWidth', 1);
+plot(real(Eoptilux), imag(Eoptilux), '*g');
 
 % figure;
 % plot(real(Eoutiq),imag(Eoutiq),'*');
@@ -98,7 +90,6 @@ h=animatedline(real(Eoutiq(1)), imag(Eoutiq(1)), 'LineStyle', 'None', 'Marker', 
 axis([-8 8 -8 8]);
 for i=2:4096
     addpoints(h, real(Eoutiq(i)), imag(Eoutiq(i)))
-    
     drawnow
 end
 
