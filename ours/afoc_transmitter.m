@@ -29,27 +29,26 @@ laser_signal = afoc_lasersource(Ppeak, lam, spac, Nfft);
 alphabet_size = 4;
 
 %OOK
-seq1 = pattern('random');
-seq2 = pattern('random');
+% seq1 = pattern('random');
+% seq2 = pattern('random');
 
 %16QAM
-% OPTIONS.alphabet = alphabet_size;
-% seq1 = pattern('random', OPTIONS);
-% seq2 = pattern('random', OPTIONS);
+OPTIONS.alphabet = alphabet_size;
+seq1 = pattern('random', OPTIONS);
+seq2 = pattern('random', OPTIONS);
 
 %OOK
-elec_i = electricsource(seq1, 'ook', symbrate, 'cosroll', duty, roll);
-elec_q = electricsource(seq2, 'ook', symbrate, 'cosroll', duty, roll);
+% elec_i = electricsource(seq1, 'ook', symbrate, 'cosroll', duty, roll);
+% elec_q = electricsource(seq2, 'ook', symbrate, 'cosroll', duty, roll);
 
 
 %16QAM
-% par.alphabet = 4;
-% par.limits = [-1;1];
-% elec_i = electricsource(seq1, 'userdef', symbrate, 'cosroll', duty, roll, par);
-% elec_q = electricsource(seq2, 'userdef', symbrate, 'cosroll', duty, roll, par);
+par.alphabet = 4;
+par.limits = [-1;1];
+elec_i = electricsource(seq1, 'userdef', symbrate, 'cosroll', duty, roll, par);
+elec_q = electricsource(seq2, 'userdef', symbrate, 'cosroll', duty, roll, par);
 
 
-%OOK
 [Eoutiq, Eopti, Eoptq] = afoc_iqmod(laser_signal, elec_i, elec_q, 1, 0);
 %points = linspace(1, length(modsignal), length(modsignal));
 points=linspace(1,4096,4096);
