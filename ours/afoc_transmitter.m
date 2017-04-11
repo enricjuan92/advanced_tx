@@ -26,27 +26,27 @@ laser_signal = afoc_lasersource(Ppeak, lam, spac, Nfft);
 
 %Then, create the bit pattern and the electrical signal
 
-%OOK
-%seq1 = pattern('random');
-%seq2 = pattern('random');
-
-%16QAM
-OPTIONS.alphabet = 4;
-seq1 = pattern('debruijn', 0, OPTIONS);
-seq2 = pattern('debruijn', 1, OPTIONS);
+alphabet_size = 4;
 
 %OOK
-% elec_i = electricsource(seq1, 'qpsk', symbrate, 'cosroll', duty, roll);
-% elec_q = electricsource(seq2, 'qpsk', symbrate, 'cosroll', duty, roll);
-%modsignal = modulationChooser(seq1, 'QPSK');
-%elec_i = real(modsignal);
-%elec_q = imag(modsignal);
+seq1 = pattern('random');
+seq2 = pattern('random');
 
 %16QAM
-par.alphabet = 4;
-par.limits = [-1;1];
-elec_i = electricsource(seq1, 'userdef', symbrate, 'cosroll', duty, roll, par);
-elec_q = electricsource(seq2, 'userdef', symbrate, 'cosroll', duty, roll, par);
+% OPTIONS.alphabet = alphabet_size;
+% seq1 = pattern('random', OPTIONS);
+% seq2 = pattern('random', OPTIONS);
+
+%OOK
+elec_i = electricsource(seq1, 'ook', symbrate, 'cosroll', duty, roll);
+elec_q = electricsource(seq2, 'ook', symbrate, 'cosroll', duty, roll);
+
+
+%16QAM
+% par.alphabet = 4;
+% par.limits = [-1;1];
+% elec_i = electricsource(seq1, 'userdef', symbrate, 'cosroll', duty, roll, par);
+% elec_q = electricsource(seq2, 'userdef', symbrate, 'cosroll', duty, roll, par);
 
 
 %OOK
@@ -63,11 +63,16 @@ legend('IQ Modulator output')
 %preprocessing for plotting: most repeated values
 index_i = rep_values(elec_i, 25);
 index_q = rep_values(elec_q, 25);
+real_size = max(min(size(index_i), size(index_q)));
+index_q_resize = index_q(1:real_size);
+index_i_resize = index_i(1:real_size);
+
 
 figure;
 plot(elec_i, elec_q, '*r');
 hold on;
-plot(elec_i(index_i), elec_q(index_q), '*b', 'LineWidth', 1);
+plot(elec_i(index_i_resize), elec_q(index_q_resize), '*b', 'LineWidth', 1);
+%plot(mrep_values_i, mrep_values_q, '*b', 'LineWidth', 1);
 title('Electrical constellation');
 hold off;
 
@@ -81,13 +86,18 @@ legend('Optilux','Afoc IQ')
 Eoptilux_i = real(Eoptilux);
 Eoptilux_q = imag(Eoptilux);
 
-index_i = rep_values(Eoptilux_i, 20);
-index_q = rep_values(Eoptilux_q, 20);
+clear index_i index_q
+index_i = rep_values(Eoptilux_i, 25);
+index_q = rep_values(Eoptilux_q, 25);
+real_size = max(min(size(index_i), size(index_q)));
+index_q_resize = index_q(1:real_size);
+index_i_resize = index_i(1:real_size);
 
 figure;
 plot(Eoptilux_i, Eoptilux_q, '*g');
 hold on;
-plot(Eoptilux_i(index_i), Eoptilux_q(index_q), '*r', 'LineWidth', 1);
+plot(Eoptilux_i(index_i_resize), Eoptilux_q(index_q_resize), '*r', 'LineWidth', 1);
+%plot(mrep_values_i, mrep_values_q, '*r', 'LineWidth', 1);
 
 % figure;
 % plot(real(Eoutiq),imag(Eoutiq),'*');
