@@ -10,6 +10,7 @@ Nsymb = 64;         %Number of symbols
 Nt = 64;            %Points per symbol
 Nfft = Nsymb*Nt;    %Points of simulation
 Nch = 1;            %Number of channels
+
 GSTATE.NSYMB = Nsymb;
 GSTATE.NT = Nt;
 GSTATE.NCH = Nch;
@@ -86,7 +87,7 @@ Eoptilux_q = imag(Eoptilux);
 figure;
 plot(Eoptilux_i, Eoptilux_q, '*g');
 hold on;
-plot(Eoptilux_i(index_i_resize), Eoptilux_q(index_q_resize), '*r', 'LineWidth', 1);
+plot(Eoptilux_i(index_i_resize), Eoptilux_q(index_q_resize), '*r', 'LineWidth', 2);
 title('Optical constellation (Optilux)')
 hold off;
 
