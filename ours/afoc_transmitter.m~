@@ -60,7 +60,16 @@ plot(points, Eoutiq);
 title('IQ Modulator output');
 
 % Plot Optical Constellation animation (AFOC)
-animated_plot(Eoutiq, 'Optical constellation Animation (AFOC)', [-8 8 -8 8]);
+figure;
+title('Optical constellation Animation (AFOC)')
+h=animatedline(real(Eoutiq(1)), imag(Eoutiq(1)), 'LineStyle', 'None', 'Marker', '*', 'Color', 'blue');
+axis([-8 8 -8 8]);
+for i=2:4096
+    addpoints(h, real(Eoutiq(i)), imag(Eoutiq(i)))
+    
+    drawnow
+end
+animated_plot
 
 %% Comparing results with Optilux toolbox
 Eoptilux = qi_modulator(laser_signal, elec_i, elec_q);

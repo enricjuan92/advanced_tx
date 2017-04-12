@@ -12,10 +12,12 @@ Eout_q = afoc_mzm(Vpi, Vbias, elec2, Ein_q);
 points=linspace(1,4096,4096);
 figure;
 plot(points, Eout_i, points, Eout_q);
+title('MZM Output (IQ)');
 legend('MZM Output (I-Branch)', 'MZM Output (Q-Branch)');
 %figure;
 %plot(points, Popt_i, points, Popt_q);
 %legend('Optical Power (I-Branch)','Optical Power (Q-Branch)');
 
-
 Eout_iq = 2*(Eout_i + 1i*Eout_q);
+
+end
