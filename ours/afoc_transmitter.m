@@ -47,7 +47,7 @@ legend('Electrical Signal (I-Branch)', 'Electrical Signal (Q-Branch)');
 figure;
 plot(elec_i, elec_q, '*r');
 hold on;
-plot(elec_i(index_i_resize), elec_q(index_q_resize), '*b', 'LineWidth', 1);
+plot(elec_i(index_i_resize), elec_q(index_q_resize), '*b', 'LineWidth', 2);
 title('Electrical constellation');
 hold off;
 
@@ -56,11 +56,15 @@ Eoutiq = afoc_iqmod(laser_signal, elec_i, elec_q, 1, 0);
 
 %Plot IQ Modulator output
 figure;
+subplot(2,2,1)
+plot(points, real(Eoutiq));
+title('I Modulator output');
+subplot(2,2,2)
+plot(points, imag(Eoutiq));
+title('Q Modulator output');
+subplot(2,2,[3 4])
 plot(points, Eoutiq);
 title('IQ Modulator output');
-
-% Plot Optical Constellation animation (AFOC)
-animated_plot(Eoutiq, 'Optical constellation Animation (AFOC)', [-8 8 -8 8]);
 
 %% Comparing results with Optilux toolbox
 Eoptilux = qi_modulator(laser_signal, elec_i, elec_q);
@@ -70,6 +74,7 @@ figure;
 plot(points, Eoptilux, points, Eoutiq);
 title('Transmissor Ouptut: AFOC vs. Optilux')
 legend('Optilux','Afoc IQ')
+% Podríamos normalizar las señales, restarlas y plotar la diferencia 
 
 % Plot Optical Constellation (Optilux)
 % Preprocessing
@@ -84,5 +89,8 @@ hold on;
 plot(Eoptilux_i(index_i_resize), Eoptilux_q(index_q_resize), '*r', 'LineWidth', 1);
 title('Optical constellation (Optilux)')
 hold off;
+
+% Plot Optical Constellation animation (AFOC)
+animated_plot(Eoutiq, 'Optical constellation Animation (AFOC)', [-8 8 -8 8]);
 
 % length(find(abs(Eoutiq)>6))/length(Eoutiq) *100
