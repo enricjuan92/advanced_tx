@@ -29,8 +29,9 @@ laser_signal = afoc_lasersource(Ppeak, lam, spac, Nfft);
 
 %% Create the bit pattern and the electrical signal
 
-%[elec_i, elec_q] = elec_signal('ook', ELECS);
-[elec_i, elec_q] = elec_signal('16qam', ELECS);
+%[elec_i, elec_q] = elec_signal('qpsk', ELECS);
+%[elec_i, elec_q] = elec_signal('16qam', ELECS);
+[elec_i, elec_q] = elec_signal('ook', ELECS);
 
 % Plot Electrical signal
 points = linspace(1, length(elec_i), length(elec_i));
