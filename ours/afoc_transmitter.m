@@ -30,8 +30,9 @@ laser_signal = afoc_lasersource(Ppeak, lam, spac, Nfft);
 
 %% Create the bit pattern and the electrical signal
 
-%[elec_i, elec_q] = elec_signal('ook', ELECS);
-[elec_i, elec_q] = elec_signal('16qam', ELECS);
+%[elec_i, elec_q] = elec_signal('qpsk', ELECS);
+%[elec_i, elec_q] = elec_signal('16qam', ELECS);
+[elec_i, elec_q] = elec_signal('ook', ELECS);
 
 % Plot Electrical signal
 points = linspace(1, length(elec_i), length(elec_i));
@@ -40,6 +41,7 @@ figure;
 plot(points, elec_i, points, elec_q);
 title('Electrical Signals');
 legend('Electrical Signal (I-Branch)', 'Electrical Signal (Q-Branch)');
+saveas(gcf, 'electrical_signals.png');
 
 %Plot electrical complex constellation
 % Preprocessing
@@ -49,8 +51,13 @@ figure;
 plot(elec_i, elec_q, '*r');
 hold on;
 plot(elec_i(index_i_resize), elec_q(index_q_resize), '*b', 'LineWidth', 2);
+ax=gca;
+ax.XAxisLocation = 'origin';
+ax.YAxisLocation = 'origin';
+axis([-1.5 1.5 -1.5 1.5]);
 title('Electrical constellation');
 hold off;
+saveas(gcf,'electrical_constellation.png');
 
 %% IQ Modulation by means of a MZM 
 Eoutiq = afoc_iqmod(laser_signal, elec_i, elec_q, 1, 0);
@@ -66,6 +73,7 @@ title('Q Modulator output');
 subplot(2,2,[3 4])
 plot(points, Eoutiq);
 title('IQ Modulator output');
+saveas(gcf, 'IQ_Modulator_output.png')
 
 %% Comparing results with Optilux toolbox
 Eoptilux = qi_modulator(laser_signal, elec_i, elec_q);
@@ -75,6 +83,7 @@ figure;
 plot(points, Eoptilux, points, Eoutiq);
 title('Transmissor Ouptut: AFOC vs. Optilux')
 legend('Optilux','Afoc IQ')
+saveas(gcf, 'Transmissor_comparison.png');
 % Podríamos normalizar las señales, restarlas y plotar la diferencia 
 
 % Plot Optical Constellation (Optilux)
@@ -90,6 +99,7 @@ hold on;
 plot(Eoptilux_i(index_i_resize), Eoptilux_q(index_q_resize), '*r', 'LineWidth', 2);
 title('Optical constellation (Optilux)')
 hold off;
+saveas(gcf, 'Optical_constellation.png');
 
 % Plot Optical Constellation animation (AFOC)
 animated_plot(Eoutiq, 'Optical constellation Animation (AFOC)', [-8 8 -8 8]);

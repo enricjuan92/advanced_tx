@@ -1,7 +1,9 @@
 function [signal_i, signal_q] = elec_signal(modulation, ELECS)
 
+global GSTATE;
+
 %On-Off Keying (ASK) Modulation
-if strcmp(modulation, 'ook')       
+if strcmp(modulation, 'qpsk')       
     
     ELECS.par.alphabet = NaN;
     ELECS.par.limits = NaN;
@@ -19,6 +21,15 @@ elseif strcmp(modulation, '16qam')
     
     bitseq_i = pattern('random', ELECS.par);
     bitseq_q = pattern('random', ELECS.par);
+    
+%OOK
+elseif strcmp(modulation, 'ook')
+    
+    ELECS.par.alphabet = NaN;
+    ELECS.par.limits = NaN;
+    
+    bitseq_i = pattern('random');
+    bitseq_q = zeros(GSTATE.NSYMB,1);
     
 else
     error('Modulation not supported');
