@@ -46,7 +46,7 @@ figure;
 plot(points, elec_i, points, elec_q);
 title('Electrical Signals');
 legend('Electrical Signal (I-Branch)', 'Electrical Signal (Q-Branch)');
-saveas(gcf, strcat('Results/',modulation, '_', 'electrical_signals.png'));
+%saveas(gcf, strcat('Results/',modulation, '_', 'electrical_signals.png'));
 
 %Plot electrical complex constellation
 % Preprocessing
@@ -62,7 +62,7 @@ ax.YAxisLocation = 'origin';
 axis([-1.5 1.5 -1.5 1.5]);
 title('Electrical constellation');
 hold off;
-saveas(gcf, strcat('Results/',modulation, '_', 'electrical_constellation.png'));
+%saveas(gcf, strcat('Results/',modulation, '_', 'electrical_constellation.png'));
 
 %% IQ Modulation by means of a MZM 
 Eoutiq = afoc_iqmod(laser_signal, elec_i, elec_q, Vpi, Vbias);
@@ -78,7 +78,7 @@ title('Q Modulator output');
 subplot(2,2,[3 4])
 plot(points, Eoutiq);
 title('IQ Modulator output');
-saveas(gcf, strcat('Results/',modulation, '_', 'IQ_Modulator_output.png'));
+%saveas(gcf, strcat('Results/',modulation, '_', 'IQ_Modulator_output.png'));
 
 % Plot Optical Constellation (Optilux)
 % Preprocessing
@@ -93,7 +93,7 @@ hold on;
 plot(Eout_i(index_i_resize), Eout_q(index_q_resize), '*r', 'LineWidth', 2);
 title('Optical constellation')
 hold off;
-saveas(gcf, strcat('Results/',modulation, '_', 'Optical_constellation.png'));
+%saveas(gcf, strcat('Results/',modulation, '_', 'Optical_constellation.png'));
 
 %% Comparing results with Optilux toolbox
 Eoptilux = qi_modulator(laser_signal, elec_i, elec_q);
@@ -103,7 +103,7 @@ figure;
 plot(points, Eoptilux, points, Eoutiq);
 title('Transmissor Ouptut: AFOC vs. Optilux')
 legend('Optilux','Afoc IQ')
-saveas(gcf, strcat('Results/',modulation, '_', 'Transmissor_comparison.png'));
+%saveas(gcf, strcat('Results/',modulation, '_', 'Transmissor_comparison.png'));
 % Podríamos normalizar las señales, restarlas y plotar la diferencia 
 
 % Plot Optical Constellation (Optilux)
@@ -119,7 +119,7 @@ hold on;
 plot(Eoptilux_i(index_i_resize), Eoptilux_q(index_q_resize), '*r', 'LineWidth', 2);
 title('Optical constellation (Optilux)')
 hold off;
-saveas(gcf, strcat('Results/',modulation, '_', 'Optical_constellation_optilux.png'));
+%saveas(gcf, strcat('Results/',modulation, '_', 'Optical_constellation_optilux.png'));
 
 % Plot Optical Constellation animation (AFOC)
 animated_plot(Eoutiq, 'Optical constellation Animation (AFOC)', [-8 8 -8 8]);
