@@ -6,8 +6,8 @@ global GSTATE;
 
 %% Configuration parameters
 %Simulation parameters
-Nsymb = 64;         %Number of symbols
-Nt = 64;            %Points per symbol
+Nsymb = 2048;         %Number of symbols
+Nt = 16;            %Points per symbol
 Nfft = Nsymb*Nt;    %Points of simulation
 Nch = 1;            %Number of channels
 
@@ -23,14 +23,15 @@ Ppeak = 42.7266;    %Peak power (from ex_01)
 
 ELECS.symbrate = 10;      %Baud rate [Gbaud]
 ELECS.duty = 1;           %Duty Cicle
-ELECS.roll = 0.2;         %pulse roll-off
+ELECS.roll = 0.5;         %pulse roll-off
 
 %Modulator parameters
 Vpi = 1;
 Vbias = 0;
 %modulation = 'ook';
+modulation = 'bpsk';
 %modulation = 'qpsk';
-modulation = '16qam';
+%modulation = '16qam';
 
 %% Laser source generation
 laser_signal = afoc_lasersource(Ppeak, lam, spac, Nfft);

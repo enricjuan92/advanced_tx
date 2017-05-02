@@ -8,7 +8,7 @@ Eout_q = afoc_mzm(Vpi, Vbias, elec2, Ein_q);
 
 %modulation = 'ook';
 
-points=linspace(1,4096,4096);
+points=linspace(1, length(Eout_i), length(Eout_i));
 figure;
 plot(points, Eout_i, points, Eout_q);
 title('MZM Output (IQ)');
