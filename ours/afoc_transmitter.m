@@ -6,8 +6,8 @@ global GSTATE;
 
 %% Configuration parameters
 %Simulation parameters
-Nsymb = 2048;         %Number of symbols
-Nt = 16;            %Points per symbol
+Nsymb = 2^11;         %Number of symbols
+Nt = 2^5;            %Points per symbol
 Nfft = Nsymb*Nt;    %Points of simulation
 Nch = 1;            %Number of channels
 
@@ -21,24 +21,27 @@ spac = 0.4;         %Channel spacing [mm]
 lam = 1550;         %Central wavelength [nm]
 Ppeak = 42.7266;    %Peak power (from ex_01)
 
-ELECS.symbrate = 10;      %Baud rate [Gbaud]
-ELECS.duty = 1;           %Duty Cicle
-ELECS.roll = 0.5;         %pulse roll-off
+symbrate = 10;      %Baud rate [Gbaud]
+GSTATE.SRATE = symbrate;
+duty = 1;           %Duty Cicle
+roll = 0;         %pulse roll-off
 
 %Modulator parameters
 Vpi = 1;
 Vbias = 0;
 %modulation = 'ook';
-modulation = 'bpsk';
+%modulation = 'bpsk';
 %modulation = 'qpsk';
-%modulation = '16qam';
+modulation = 'M-QAM';
+m=64;
 
 %% Laser source generation
+%Nfft = Nfft/(log2(m)/2);
 laser_signal = afoc_lasersource(Ppeak, lam, spac, Nfft);
 
 %% Create the bit pattern and the electrical signal
 
-[elec_i, elec_q] = elec_signal(modulation, ELECS);
+[elec_i, elec_q] = elec_signal(modulation, m, roll, duty);
 
 % Plot Electrical signal
 points = linspace(1, length(elec_i), length(elec_i));
@@ -60,7 +63,7 @@ plot(elec_i(index_i_resize), elec_q(index_q_resize), '*b', 'LineWidth', 2);
 ax=gca;
 ax.XAxisLocation = 'origin';
 ax.YAxisLocation = 'origin';
-axis([-1.5 1.5 -1.5 1.5]);
+axis([-13.5 13.5 -13.5 13.5]);
 title('Electrical constellation');
 hold off;
 %saveas(gcf, strcat('Results/',modulation, '_', 'electrical_constellation.png'));
@@ -123,6 +126,6 @@ hold off;
 %saveas(gcf, strcat('Results/',modulation, '_', 'Optical_constellation_optilux.png'));
 
 % Plot Optical Constellation animation (AFOC)
-animated_plot(Eoutiq, 'Optical constellation Animation (AFOC)', [-8 8 -8 8]);
+%animated_plot(Eoutiq, 'Optical constellation Animation (AFOC)', [-8 8 -8 8]);
 
 % length(find(abs(Eoutiq)>6))/length(Eoutiq) *100
