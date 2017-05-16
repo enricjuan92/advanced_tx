@@ -1,14 +1,27 @@
-function [detected_symbs] = detector(Ein)
+function [E_real_det, E_imag_det] = detector(Ein)
 
 %Ein => Received signal after optoelectric conversion
 
-Ein_real = real(Ein);
-Ein_imag = imag(Ein);
+Ein_att= (10^-6)*Ein;
+thNoise = comm.ThermalNoise('NoiseTemperature',290,'SampleRate',10e6);
+Ein_noisy = thNoise(Ein_att);
+scatterplot(Ein_noisy)
 
-%Muestrear cada Nt a partir de Nt/2
-    %Un vector con la parte real de N símbolos
-    %Un vecotr con la parte imaginaria de N símbolos
-%Definimos los niveles y a partir de ahí las regiones
+Ein_real = real(Ein_noisy);
+Ein_imag = imag(Ein_noisy);
 
+Nt = 2^5;
+
+j = 0;
+
+for i=(Nt/2):Nt:size(Ein,1)
+    j = j+1;
+    E_real_det(j) = Ein_real(i);
+    E_imag_det(j) = Ein_imag(i);
+end
+
+
+
+%Contar errores
 end
 
