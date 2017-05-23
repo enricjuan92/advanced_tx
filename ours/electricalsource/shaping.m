@@ -3,9 +3,11 @@
 function shapesig= shaping(pat, duty, roll)
 % This function calculates converts the PRBS signal to an electric signal.
 %% PARAMETERS
-    N = 2048;                               % Lenght of the symbol-pat sequence
-    M = 16;                                 % Points per symbol
-    Rsymb= 10e9;                            % Symbol rate [bits/s]
+global GSTATE
+    N = GSTATE.NSYMB;                               % Lenght of the symbol-pat sequence
+    %N = length(pat);
+    M = GSTATE.NT;                                 % Points per symbol
+    Rsymb= GSTATE.SRATE;                            % Symbol rate [bits/s]
     nfft=N*M;                               % Number of FFT points
     shapesig=zeros(nfft,1);                 % Vector to save electric signal
     
