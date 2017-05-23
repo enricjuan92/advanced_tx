@@ -11,12 +11,11 @@ ordenado = sort(n, 'descend'); % Coloca en orden descediente el número de repeti
 
 ordenado_Nsimb = ordenado(1:(mod_order/sqrt(mod_order))/2); % Vector que coge las N repeticiones del vector ordenado en función del
 % número de símbolos de la modulación.
-viv = zeros(length(ordenado_Nsimb), 1);
-viv(1:length(ordenado_Nsimb)) = find(n >= ordenado_Nsimb(length(ordenado_Nsimb))); % Del vector anterior seleccionamos 
+viv = find(n >= ordenado_Nsimb); % Del vector anterior seleccionamos 
 pos_vec = pos_vec(ismember(bin, viv));
-pos_lvl = unique(pos_vec)';
-neg_lvl = sort(-pos_lvl);
+pos_lvl = unique(pos_vec);
+neg_lvl = -pos_lvl;
 lvls = [neg_lvl pos_lvl];
 
-levels(1:length(lvls)-1) = (mean([lvls(1:length(lvls)-1);lvls(2:length(lvls))]));
+levels = (mean([lvls(1:length(lvls)-1) lvls(2:length(lvls))]));
 

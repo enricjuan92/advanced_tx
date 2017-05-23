@@ -16,7 +16,7 @@ viv(1:length(ordenado_Nsimb)) = find(n >= ordenado_Nsimb(length(ordenado_Nsimb))
 pos_vec = pos_vec(ismember(bin, viv));
 pos_lvl = unique(pos_vec)';
 neg_lvl = sort(-pos_lvl);
-lvls = [neg_lvl pos_lvl];
+lvls = [neg_lvl pos_lvl]
 
-levels(1:length(lvls)-1) = (mean([lvls(1:length(lvls)-1);lvls(2:length(lvls))]));
+levels(1:length()) = (mean([lvls(1:length(lvls)-1) lvls(2:length(lvls))]));
 
