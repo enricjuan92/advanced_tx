@@ -54,12 +54,23 @@ legend('Electrical Signal (I-Branch)', 'Electrical Signal (Q-Branch)');
 
 %Plot electrical complex constellation
 % Preprocessing
+levels = get_levels(elec_i, m)
 [index_i_resize, index_q_resize] = isignal_reshape(elec_i, elec_q, 25);
 
 figure;
 plot(elec_i, elec_q, '*r');
 hold on;
 plot(elec_i(index_i_resize), elec_q(index_q_resize), '*b', 'LineWidth', 2);
+for i=1:length(levels)
+    hold on;
+    plot(ones(length(levels)*2+1)*levels(i), -length(levels):length(levels), 'r--')
+end
+
+for i=1:length(levels)
+    hold on;
+    plot(-length(levels):length(levels), ones(length(levels)*2+1)*levels(i), 'r--')
+end
+
 ax=gca;
 ax.XAxisLocation = 'origin';
 ax.YAxisLocation = 'origin';
