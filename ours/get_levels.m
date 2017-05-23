@@ -17,5 +17,5 @@ pos_lvl = unique(pos_vec);
 neg_lvl = -pos_lvl;
 lvls = [neg_lvl pos_lvl];
 
-levels = (mean([lvl(1:length(lvls)-1) lvl(2:length(lvls))]));
+levels = (mean([lvls(1:length(lvls)-1) lvls(2:length(lvls))]));
 
