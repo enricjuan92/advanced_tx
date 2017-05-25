@@ -9,7 +9,8 @@ uniq = unique(pos_vec); %diferentes niveles en el vector
 % bin:
 ordenado = sort(n, 'descend'); % Coloca en orden descediente el número de repeticiones
 
-ordenado_Nsimb = ordenado(1:(mod_order/sqrt(mod_order))/2); % Vector que coge las N repeticiones del vector ordenado en función del
+ordenado_Nsimb = ordenado(1:(mod_order/sqrt(mod_order))/2); 
+% Vector que coge las N repeticiones del vector ordenado en función del
 % número de símbolos de la modulación.
 viv = zeros(length(ordenado_Nsimb), 1);
 viv(1:length(ordenado_Nsimb)) = find(n >= ordenado_Nsimb(length(ordenado_Nsimb))); % Del vector anterior seleccionamos 

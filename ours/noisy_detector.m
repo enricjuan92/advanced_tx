@@ -20,7 +20,6 @@ for i=(Nt/2):Nt:size(Ein,1)
 end
 
 Enoisy_det = Enoisy_det_real + 1i*Enoisy_det_imag;
-scatterplot(Enoisy_det);
 
 end
 

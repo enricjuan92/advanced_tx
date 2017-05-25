@@ -1,4 +1,4 @@
-function E_l = afoc_lasersource(Ptx, lam, spac, nfft)
+function E_l = afoc_lasersource(Ptx, nfft)
 
 E_l = ones(nfft, 1)*sqrt(Ptx);
 

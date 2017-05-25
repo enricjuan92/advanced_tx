@@ -7,18 +7,22 @@ limit_nseed = GSTATE.NSYMB/4;
 nseed_i = randi([0 limit_nseed/2]);
 nseed_q = randi([(limit_nseed/2+1) limit_nseed]);
 
-%On-Off Keying (ASK) Modulation
+%Binary Phase-Shift Keying (BPSK) Modulation
 if strcmp(modulation, 'bpsk')       
     
-    bitseq_i = pattern('debruijn', nseed_i);
+    %bitseq_i = pattern('debruijn', nseed_i);
     %bitseq_q = pattern('debruijn', nseed_q);
+    bitseq_i = pattern('random');
+    bitseq_q = pattern('random');
     lims = [-10 10];
     
 elseif strcmp(modulation, 'qpsk')       
     
-    bitseq_i = pattern('debruijn', nseed_i);
-    bitseq_q = pattern('debruijn', nseed_q);
-    lims = [-10 10];
+    %bitseq_i = pattern('debruijn', nseed_i);
+    %bitseq_q = pattern('debruijn', nseed_q);
+    bitseq_i = pattern('random');
+    bitseq_q = pattern('random');
+    lims = [-1 1];
     
 % 16-QAM Modulation
 elseif strcmp(modulation, 'M-QAM')
@@ -32,8 +36,11 @@ elseif strcmp(modulation, 'M-QAM')
 %OOK
 elseif strcmp(modulation, 'ook')
     
-    bitseq_i = pattern('debruijn', nseed_i);
+    %bitseq_i = pattern('random', nseed_i);
+    %bitseq_q = zeros(GSTATE.NSYMB,1);
+    bitseq_i = pattern('random');
     bitseq_q = zeros(GSTATE.NSYMB,1);
+    lims = [-10 10];
     
 else
     error('Modulation not supported');

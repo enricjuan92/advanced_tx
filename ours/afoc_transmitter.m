@@ -1,3 +1,4 @@
+%function [modulation_order, Eout] = afoc_transmitter()
 %BASIC TRANSMITTER SIMULATOR
 clear all;
 close all;
@@ -6,7 +7,7 @@ global GSTATE;
 
 %% Configuration parameters
 %Simulation parameters
-Nsymb = 2^11;         %Number of symbols
+Nsymb = 2^15;         %Number of symbols
 Nt = 2^5;            %Points per symbol
 Nfft = Nsymb*Nt;    %Points of simulation
 Nch = 1;            %Number of channels
@@ -17,8 +18,6 @@ GSTATE.NCH = Nch;
 GSTATE.PRINT = false;
 
 %First, implement the laser signal
-spac = 0.4;         %Channel spacing [mm]
-lam = 1550;         %Central wavelength [nm]
 Ppeak = 42.7266;    %Peak power (from ex_01)
 
 symbrate = 10;      %Baud rate [Gbaud]
@@ -27,7 +26,7 @@ duty = 1;           %Duty Cicle
 roll = 0;         %pulse roll-off
 
 %Modulator parameters
-Vpi = 1;
+Vpi = 5;
 Vbias = 0;
 %modulation = 'ook';
 %modulation = 'bpsk';
@@ -37,7 +36,7 @@ m=64;
 
 %% Laser source generation
 %Nfft = Nfft/(log2(m)/2);
-laser_signal = afoc_lasersource(Ppeak, lam, spac, Nfft);
+laser_signal = afoc_lasersource(Ppeak, Nfft);
 
 %% Create the bit pattern and the electrical signal
 
@@ -54,7 +53,7 @@ legend('Electrical Signal (I-Branch)', 'Electrical Signal (Q-Branch)');
 
 %Plot electrical complex constellation
 % Preprocessing
-levels = get_levels(elec_i, m)
+levels = get_levels(elec_i, m);
 [index_i_resize, index_q_resize] = isignal_reshape(elec_i, elec_q, 25);
 
 figure;
@@ -110,30 +109,33 @@ title('Optical constellation')
 hold off;
 %saveas(gcf, strcat('Results/',modulation, '_', 'Optical_constellation.png'));
 
+Eout = Eoutiq;
+modulation_order = m;
+
 %% Comparing results with Optilux toolbox
-Eoptilux = qi_modulator(laser_signal, elec_i, elec_q);
+% Eoptilux = qi_modulator(laser_signal, elec_i, elec_q);
 
 % Plot IQ modulated signal: AFOC vs. Optilux
-figure;
-plot(points, Eoptilux, points, Eoutiq);
-title('Transmissor Ouptut: AFOC vs. Optilux')
-legend('Optilux','Afoc IQ')
+% figure;
+% plot(points, Eoptilux, points, Eoutiq);
+% title('Transmissor Ouptut: AFOC vs. Optilux')
+% legend('Optilux','Afoc IQ')
 %saveas(gcf, strcat('Results/',modulation, '_', 'Transmissor_comparison.png'));
 % Podríamos normalizar las señales, restarlas y plotar la diferencia 
 
 % Plot Optical Constellation (Optilux)
 % Preprocessing
-Eoptilux_i = real(Eoptilux);
-Eoptilux_q = imag(Eoptilux);
-
-[index_i_resize, index_q_resize] = isignal_reshape(Eoptilux_i, Eoptilux_q, 25);
-
-figure;
-plot(Eoptilux_i, Eoptilux_q, '*g');
-hold on;
-plot(Eoptilux_i(index_i_resize), Eoptilux_q(index_q_resize), '*r', 'LineWidth', 2);
-title('Optical constellation (Optilux)')
-hold off;
+% Eoptilux_i = real(Eoptilux);
+% Eoptilux_q = imag(Eoptilux);
+% 
+% [index_i_resize, index_q_resize] = isignal_reshape(Eoptilux_i, Eoptilux_q, 25);
+% 
+% figure;
+% plot(Eoptilux_i, Eoptilux_q, '*g');
+% hold on;
+% plot(Eoptilux_i(index_i_resize), Eoptilux_q(index_q_resize), '*r', 'LineWidth', 2);
+% title('Optical constellation (Optilux)')
+% hold off;
 %saveas(gcf, strcat('Results/',modulation, '_', 'Optical_constellation_optilux.png'));
 
 % Plot Optical Constellation animation (AFOC)

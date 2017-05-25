@@ -1,3 +1,4 @@
+%function BER = afoc_receiver(m, Eoutiq)
 %RECEIVER
 
 modord = m;
@@ -23,10 +24,29 @@ for i=(Nt/2):Nt:size(Eoutiq_att,1)
 end
 Edet = Edet_real+1i*Edet_imag;
 scatterplot(Edet);
+for i=1:length(lvls_I)
+    hold on;
+    plot(ones(length(lvls_I)*2+1)*lvls_I(i), -length(lvls_I):length(lvls_I), 'r--')
+end
+
+for i=1:length(lvls_Q)
+    hold on;
+    plot(-length(lvls_Q):length(lvls_Q), ones(length(lvls_Q)*2+1)*lvls_Q(i), 'r--')
+end
 
 %Obtain the noisy symbols of Eoutiq (Enoisy => VECTOR WITH NSYM COMPLEX
 %NOISY SYMBOLS)
 Enoisy = noisy_detector(Eoutiq_att);
+scatterplot(Enoisy);
+for i=1:length(lvls_I)
+    hold on;
+    plot(ones(length(lvls_I)*2+1)*lvls_I(i), -length(lvls_I):length(lvls_I), 'r--')
+end
+
+for i=1:length(lvls_Q)
+    hold on;
+    plot(-length(lvls_Q):length(lvls_Q), ones(length(lvls_Q)*2+1)*lvls_Q(i), 'r--')
+end
 
 %Use Edet, Enoisy, lvls_I and lvls_Q to obtain BER
 BER = BEREstimator(Edet, Enoisy, lvls_I, lvls_Q);
