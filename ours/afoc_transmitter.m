@@ -7,7 +7,7 @@ global GSTATE;
 
 %% Configuration parameters
 %Simulation parameters
-Nsymb = 2^15;         %Number of symbols
+Nsymb = 2^17;         %Number of symbols
 Nt = 2^5;            %Points per symbol
 Nfft = Nsymb*Nt;    %Points of simulation
 Nch = 1;            %Number of channels
@@ -23,7 +23,7 @@ Ppeak = 42.7266;    %Peak power (from ex_01)
 symbrate = 10;      %Baud rate [Gbaud]
 GSTATE.SRATE = symbrate;
 duty = 1;           %Duty Cicle
-roll = 0;         %pulse roll-off
+roll = 0.2;         %pulse roll-off
 
 %Modulator parameters
 Vpi = 5;

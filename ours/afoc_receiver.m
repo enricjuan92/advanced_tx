@@ -17,7 +17,7 @@ lvls_Q = get_levels(imag(Eoutiq_att), modord);
 %Obtain the detected symbols without noise (Edet =>VECTOR WITH NSYM COMPLEX
 %COMPONENTS)
 j = 0;
-for i=(Nt/2):Nt:size(Eoutiq_att,1)
+for i=1:Nt:size(Eoutiq_att,1)
     j = j+1;
     Edet_real(j) = Eoa_real(i);
     Edet_imag(j) = Eoa_imag(i);

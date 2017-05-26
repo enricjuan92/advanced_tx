@@ -13,7 +13,7 @@ Nt = 2^5;
 
 j = 0;
 
-for i=(Nt/2):Nt:size(Ein,1)
+for i=1:Nt:size(Ein,1)
     j = j+1;
     Enoisy_det_real(j) = Ein_real(i);
     Enoisy_det_imag(j) = Ein_imag(i);
