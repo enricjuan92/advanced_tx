@@ -31,8 +31,11 @@ elseif strcmp(modulation, 'M-QAM')
     %bitseq_q = pattern('debruijn', nseed_q);
     bitseq_i = pattern('random');
     bitseq_q = pattern('random');
-    lims = [-5 5];
-    
+    if mod_ord == 16
+        lims = [-1 1];
+    else 
+        lims=[-5 5];
+    end
 %OOK
 elseif strcmp(modulation, 'ook')
     
@@ -53,9 +56,5 @@ signal_i = electricsignal(bitseq_i, modulation, mod_ord, lims, ...
 signal_q = electricsignal(bitseq_q, modulation, mod_ord, lims, ...
     roll, duty);
 
-% signal_i = electricsource(bitseq_i, modulation, ELECS.symbrate, ...
-%     'cosroll', ELECS.duty, ELECS.roll, ELECS.par);
-% signal_q = electricsource(bitseq_q, modulation, ELECS.symbrate, ...
-%     'cosroll', ELECS.duty, ELECS.roll, ELECS.par);
 
 end
