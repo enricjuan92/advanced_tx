@@ -16,14 +16,14 @@ GSTATE.NCH = Nch;
 GSTATE.PRIGSTATE.NT = false;
 
 %First, implemeGSTATE.NT the laser signal
-Ppeak = 42.7266;    %Peak power (from ex_01)
+Ppeak = 1;    %Peak power (from ex_01)
 
 symbrate = 10;      %Baud rate [Gbaud]
 GSTATE.SRATE = symbrate;
 duty = 1;           %Duty Cicle
 
 %Modulator parameters
-Vpi = 5;
+%Vpi = 5;
 Vbias = 0;
 modulation= 'M-QAM';
 
@@ -33,13 +33,14 @@ switch mod
         Vpi=1;
     case '16-QAM'
         m=16;
-        Vpi=1;
+        Vpi=0.5;
     case '64-QAM'
         m=64;
+        Vpi = 5;
     case '256-QAM'
+        Vpi=5;
         m=256;
-end       
-  
+end
 
 %% Laser source generation
 laser_signal = afoc_lasersource(Ppeak, Nfft);
@@ -77,6 +78,17 @@ levels = get_levels(elec_i, m);
 %% IQ Modulation by means of a MZM 
 Eoutiq = afoc_iqmod(laser_signal, elec_i, elec_q, Vpi, Vbias);
 
+switch mod
+    case 'QPSK'
+        
+    case '16-QAM'
+        
+    case '64-QAM'
+        Eoutiq = 2*Eoutiq;
+    case '256-QAM'
+        Eoutiq = 4*Eoutiq;
+end
+
 GSTATE.Eoutiq = Eoutiq;
 j = 0;
 
@@ -88,8 +100,6 @@ for i=1:GSTATE.NT:size(elec_i,1)
     GSTATE.Eout_i_sampled(j) = real(Eoutiq(i));
     GSTATE.Eout_q_sampled(j) = imag(Eoutiq(i));
 end
-
-
 
 % Plot Optical Constellation
 % Preprocessing
