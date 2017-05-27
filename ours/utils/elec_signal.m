@@ -32,7 +32,7 @@ elseif strcmp(modulation, 'M-QAM')
     bitseq_i = pattern('random');
     bitseq_q = pattern('random');
     if mod_ord == 16
-        lims = [-1 1];
+        lims = [-0.5 0.5];
     else 
         lims=[-5 5];
     end

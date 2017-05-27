@@ -20,6 +20,6 @@ GSTATE.EMZM_q = Eout_q;
 % legend('MZM Output (I-Branch)', 'MZM Output (Q-Branch)');
 %saveas(gcf, strcat('Results/',modulation, '_', 'MZM_output.png'));
 
-Eout_iq = 2*(Eout_i + 1i*Eout_q);
+Eout_iq = (Eout_i + 1i*Eout_q);
 
 end
