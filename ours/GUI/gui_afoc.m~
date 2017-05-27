@@ -99,7 +99,7 @@ selectedIndex = get(handles.popupmenu3, 'Value');
     elseif selectedIndex == 5
         modulation = '256-QAM';  
     end
-GSTATE;   
+GSTATE   
 afoc_transmitter(modulation,roll);
 
 % --- Executes on selection change in popupmenu3.
@@ -241,33 +241,25 @@ elseif selectedGraph == 3
     ylabel('');
     title('Q Modulator output');
     
-% elseif selectedGraph == 4
-%     t = linspace(0, length(GSTATE.Eout_i), length(GSTATE.Eout_i));
-% 
-%     %plot3(t, Eout_i, Eout_q, 'LineWidth',2)
-%     hold on
-%     plot3(t, GSTATE.Eout_i, zeros(size(t)))
-%     plot3(t, zeros(size(t)), GSTATE.Eout_q)
-%     hold off
-%     grid on
+elseif selectedGraph == 4
+    t = linspace(0, length(GSTATE.Eout_i), length(GSTATE.Eout_i));
+
+    %plot3(t, Eout_i, Eout_q, 'LineWidth',2)
+    hold on
+    plot3(t, GSTATE.Eout_i, zeros(size(t)))
+    plot3(t, zeros(size(t)), GSTATE.Eout_q)
+    hold off
+    grid on
     
 elseif selectedGraph == 4
     points=linspace(1, length(GSTATE.EMZM_i), length(GSTATE.EMZM_i));
-   
-    plot3(handles.axes1, points, GSTATE.EMZM_i, zeros(size(points)))
-    hold on
-    plot3(handles.axes1, points, zeros(size(points)), GSTATE.EMZM_q);
-    hold off
-    grid on
-    lims_x = [0  10e3];
-    lims_y = [-max(GSTATE.EMZM_i)-0.5 max(GSTATE.EMZM_i)+0.5];
-    lims_z = [-max(GSTATE.EMZM_i)-0.5 max(GSTATE.EMZM_i)+0.5];
-    set(handles.axes1, 'xlim', lims_x, 'ylim', lims_y, 'zlim', lims_z);
+    hold on;
+    plot3(handles.axes1, GSTATE.EMZM_i, points)
+    plot3(handles.axes1, points, GSTATE.EMZM_q);
+    hold off;
     axes(handles.axes1);
-    xlabel('MZM Output (IQ)', 'Rotation', 10);
-    ylabel('Real Axis', 'Rotation', -25)
-    zlabel('Imag Axis')
-%     legend('MZM Output (I-Branch)', 'MZM Output (Q-Branch)');
+    title('MZM Output (IQ)');
+    legend('MZM Output (I-Branch)', 'MZM Output (Q-Branch)');
     
 elseif selectedGraph == 5
     plot(handles.axes1,GSTATE.elec_i_sampled, GSTATE.elec_q_sampled, '*r');
